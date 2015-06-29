@@ -78,7 +78,7 @@ static const MongoValidOption ValidOptionArray[] =
  */
 typedef struct MongoFdwOptions
 {
-	char *address_mame;
+	char *address_name;
 	int32 port_number;
 	char *database_name;
 	char *collection_name;
