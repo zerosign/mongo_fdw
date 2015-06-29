@@ -12,8 +12,8 @@
 #ifndef MONGO_FDW_H
 #define MONGO_FDW_H
 
-#include "bson.h"
-#include "mongo.h"
+#include <bson.h>
+#include <mongoc.h>
 
 #include "fmgr.h"
 #include "catalog/pg_foreign_server.h"
@@ -51,8 +51,8 @@
  */
 typedef struct MongoValidOption
 {
-	const char *optionName;
-	Oid optionContextId;
+	const char *option_name;
+	Oid option_context_id;
 
 } MongoValidOption;
 
@@ -78,11 +78,10 @@ static const MongoValidOption ValidOptionArray[] =
  */
 typedef struct MongoFdwOptions
 {
-	char *addressName;
-	int32 portNumber;
-	char *databaseName;
-	char *collectionName;
-
+	char *address_mame;
+	int32 port_number;
+	char *database_name;
+	char *collection_name;
 } MongoFdwOptions;
 
 
@@ -90,13 +89,11 @@ typedef struct MongoFdwOptions
  * MongoFdwExecState keeps foreign data wrapper specific execution state that we
  * create and hold onto when executing the query.
  */
-typedef struct MongoFdwExecState
-{
-	struct HTAB *columnMappingHash;
-	mongo *mongoConnection;
-	mongo_cursor *mongoCursor;
-	bson *queryDocument;
-
+typedef struct MongoFdwExecState {
+  struct HTAB *column_mapping_hash;
+  mongoc_client_t * client;
+  mongoc_cursor_t * mongo_cursor;
+  bson_t *query_document;
 } MongoFdwExecState;
 
 
@@ -108,18 +105,17 @@ typedef struct MongoFdwExecState
  */
 typedef struct ColumnMapping
 {
-	char columnName[NAMEDATALEN];
-	uint32 columnIndex;
-	Oid columnTypeId;
-	int32 columnTypeMod;
-	Oid columnArrayTypeId;
-
+	char column_name[NAMEDATALEN];
+	uint32 column_index;
+	Oid column_type_id;
+	int32 column_type_mod;
+	Oid column_array_type_id;
 } ColumnMapping;
 
 
 /* Function declarations related to creating the mongo query */
 extern List * ApplicableOpExpressionList(RelOptInfo *baserel);
-extern bson * QueryDocument(Oid relationId, List *opExpressionList);
+extern bson_t * QueryDocument(Oid relationId, List *opExpressionList);
 extern List * ColumnList(RelOptInfo *baserel);
 
 /* Function declarations for foreign data wrapper */

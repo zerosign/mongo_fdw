@@ -11,13 +11,12 @@ MODULE_big = mongo_fdw
 # environment object file.
 #
 
-MONGO_DRIVER = mongo-c-driver-v0.6
-MONGO_PATH = $(MONGO_DRIVER)/src
-MONGO_OBJS = $(MONGO_PATH)/bson.os $(MONGO_PATH)/encoding.os $(MONGO_PATH)/md5.os \
-             $(MONGO_PATH)/mongo.os $(MONGO_PATH)/numbers.os $(MONGO_PATH)/env_posix.os
+# MONGO_PATH = $(MONGO_DRIVER)/src
+# MONGO_OBJS = $(MONGO_PATH)/bson.os $(MONGO_PATH)/encoding.os $(MONGO_PATH)/md5.os \
+#              $(MONGO_PATH)/mongo.os $(MONGO_PATH)/numbers.os $(MONGO_PATH)/env_posix.os
 
-PG_CPPFLAGS = --std=c99 -I$(MONGO_PATH)
-OBJS = mongo_fdw.o mongo_query.o $(MONGO_OBJS)
+PG_CPPFLAGS = --std=c99 -I/usr/include/libmongoc-1.0 -I/usr/include/libbson-1.0 -lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0 
+OBJS = mongo_fdw.o mongo_query.o
 
 EXTENSION = mongo_fdw
 DATA = mongo_fdw--1.0.sql
