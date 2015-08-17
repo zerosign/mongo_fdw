@@ -19,7 +19,7 @@ PG_CPPFLAGS = --std=c99 -I/usr/include/libmongoc-1.0 -I/usr/include/libbson-1.0 
 OBJS = mongo_fdw.o mongo_query.o
 
 EXTENSION = mongo_fdw
-DATA = mongo_fdw--1.0.sql
+DATA = mongo_fdw--2.0.sql
 
 $(MONGO_DRIVER)/%.os:
 	$(MAKE) -C $(MONGO_DRIVER) $*.os
@@ -29,6 +29,6 @@ $(MONGO_DRIVER)/%.os:
 # example: /usr/local/pgsql/bin/pg_config or /usr/lib/postgresql/9.1/bin/pg_config
 #
 
-PG_CONFIG = pg_config
-PGXS := $(shell $(PG_CONFIG) --pgxs)
-include $(PGXS)
+# PG_CONFIG = pg_config
+# PGXS := $(shell $(PG_CONFIG) --pgxs)
+# include $(PGXS)
